@@ -1,3 +1,4 @@
+import java.util.Scanner;
 
 public class Pet {
 	
@@ -8,6 +9,7 @@ public class Pet {
 	private int catSpace;
 	private int daysStay;
 	private double amountDue;
+	private String grooming;
 	
 	public Pet() {
 		petType = "";
@@ -83,8 +85,17 @@ public class Pet {
 		amountDue = newAmountDue;
 	}
 	
+	public String getGrooming() {
+		return grooming;
+	}
 	
-	public void checkIn(int daysStay, String petType ) {
+	public void setGrooming(String newGrooming) {
+		grooming = newGrooming;
+	}
+	
+	
+	public void checkIn(int daysStay, String grooming ) {
+		
 		if(petType == "cat") {
 			// Check the number of cat spaces available
 			if(catSpace > 0) {
@@ -107,6 +118,33 @@ public class Pet {
 				// No dog spaces available so return error
 				// FIXME: Return some error here
 				return;
+			}
+		}
+		// Check to see if this pet is a new pet.  If pet's age hasn't been set
+		// then we'll assume it is a new pet.  We would probably want to store
+		// some information about existing pets in a database and check against
+		// that if this was really production but for now we'll make this 
+		// assumption.
+		if(petAge == 0) {
+			// FIXME: Input all the pet's info.
+			
+		}
+		else {
+			// FIXME: Existing pet, allow update of pet's info
+			
+		}
+		
+		// FIXME: Input length of stay in days
+		
+		if (daysStay >= 2) {
+			if (petType != "cat") {
+				// This is not a cat so set the grooming attribute.
+				// We could also skip the check above if the setGrooming
+				// method was overloaded.  We could just create one that
+				// sets the grooming attribute for dogs but then create
+				// one for cats that just sets grooming to null or returns
+				// nothing.
+				this.setGrooming(grooming);
 			}
 		}
 	}

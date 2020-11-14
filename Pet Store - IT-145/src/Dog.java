@@ -2,21 +2,21 @@
 public class Dog extends Pet  {
 	public int dogSpaceNbr;
 	public int dogWeight;
-	public boolean grooming;
+	public String grooming;
 	
 	public Dog() {
 		// Constructor for the Dog class
 		dogSpaceNbr = 0;
 		dogWeight = 0;
-		grooming = false;
+		grooming = "";
 	}
 	
-	public boolean getGrooming() {
+	public String getGrooming() {
 		// Return whether grooming is necessary or not.
 		return grooming;
 	}
 	
-	public void setGrooming(boolean newGrooming) {
+	public void setGrooming(String newGrooming) {
 		// Set the grooming state to true or false.
 		grooming = newGrooming;
 	}
