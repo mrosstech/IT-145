@@ -1,8 +1,8 @@
 
 public class Dog extends Pet  {
-	public int dogSpaceNbr;
-	public int dogWeight;
-	public String grooming;
+	private int dogSpaceNbr;
+	private int dogWeight;
+	private String grooming;
 	
 	public Dog() {
 		// Constructor for the Dog class
