@@ -95,7 +95,7 @@ public class Pet {
 	
 	
 	public void checkIn(int daysStay, String grooming ) {
-		
+		Scanner scnr = new Scanner(System.in);
 		if(petType == "cat") {
 			// Check the number of cat spaces available
 			if(catSpace > 0) {
@@ -126,15 +126,30 @@ public class Pet {
 		// that if this was really production but for now we'll make this 
 		// assumption.
 		if(petAge == 0) {
-			// FIXME: Input all the pet's info.
+			// Input all the pet's info.
+			System.out.println("Enter new pet's age: ");
+			int newPetAge = scnr.nextInt();
+			System.out.println("Enter new pet's name: ");
+			String newPetName = scnr.next();
+			System.out.println("Enter new pet's type (cat/dog): ");
+			String newPetType = scnr.next();
 			
+			// Update the pet's information
+			createPet(newPetType, newPetName, newPetAge);
 		}
 		else {
 			// FIXME: Existing pet, allow update of pet's info
+			System.out.println("Enter new pet's age: ");
+			int newPetAge = scnr.nextInt();
+			System.out.println("Enter new pet's name: ");
+			String newPetName = scnr.next();
+			System.out.println("Enter new pet's type (cat/dog): ");
+			String newPetType = scnr.next();	
 			
+			// Update the pet's information
+			updatePet(newPetType, newPetName, newPetAge);
 		}
 		
-		// FIXME: Input length of stay in days
 		
 		if (daysStay >= 2) {
 			if (petType != "cat") {
@@ -155,7 +170,9 @@ public class Pet {
 	
 	public Pet getPet(String searchPetType, String searchPetName, int searchPetAge) {
 		Pet tempPet = new Pet();
-		return tempPet; //FIXME: Add Logic
+		return tempPet; 
+		//FIXME: Add Logic here.  It's not clear from the UML diagram what's required
+		// from this method.
 	}
 	
 	public void createPet(String newPetType, String newPetName, int newPetAge) {
