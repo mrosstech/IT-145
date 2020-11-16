@@ -6,7 +6,7 @@ public class Dog extends Pet  {
 	
 	public Dog() {
 		// Constructor for the Dog class
-		dogSpaceNbr = 0;
+		dogSpaceNbr = 30;
 		dogWeight = 0;
 		grooming = "";
 	}
