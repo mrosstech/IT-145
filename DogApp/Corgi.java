@@ -15,7 +15,13 @@ public class Corgi extends Dog {
     }
 
     // mutator methods
-
+    public void setWeight(int newWeight) {
+    	weight = newWeight;
+    }
+    
+    public void setAge(int newAge) {
+    	age = newAge;
+    }
 
     // override toString() method to include additional dog information
     @Override

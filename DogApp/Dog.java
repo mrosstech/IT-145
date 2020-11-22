@@ -7,11 +7,16 @@ public class Dog {
 	String topTrick;
     // constructor
 	public Dog(String newType, String newBreed, String newName) {
-		
+		type = newType;
+		breed = newBreed;
+		name = newName;
 	}
+	
 
     // methods
-
+	public void setTopTrick(String newTrick) {
+		topTrick = newTrick;
+	}
 
     // method used to print Dog information
     public String toString() {
