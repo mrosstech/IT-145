@@ -1,4 +1,5 @@
-
+// IT-145 Project 2
+// Michael Ross
 
 public class Driver {
 
@@ -9,11 +10,12 @@ public class Driver {
 
 
         // Create New Dog
+    	Dog newDog = new Dog();
 
 
 
         // Create New Monkey
-
+    	Monkey newMonkey = new Monkey();
 
 
         // Method to process request for a rescue animal

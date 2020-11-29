@@ -1,4 +1,5 @@
-
+// IT-145 Project 2
+// Michael Ross
 
 import java.text.SimpleDateFormat;
 

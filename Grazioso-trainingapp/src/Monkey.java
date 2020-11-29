@@ -1,13 +1,18 @@
+// IT-145 Project 2
+// Michael Ross
 
 public class Monkey extends RescueAnimal {
-	public String species;
-	public float tailLength;
-	public float height;
-	public float bodyLength;
-	public float torso;
-	public float skull;
-	public float neck;
+	private String species;
+	private float tailLength;
+	private float height;
+	private float bodyLength;
+	private float torso;
+	private float skull;
+	private float neck;
 	
+	public Monkey() {
+		
+	}
 	
 	// Accessors here:
 	public String getSpecies() {

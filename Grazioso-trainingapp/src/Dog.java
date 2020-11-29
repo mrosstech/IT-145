@@ -1,8 +1,10 @@
+// IT-145 Project 2
+// Michael Ross
 
 public class Dog extends RescueAnimal {
 
     // Instance variable
-    public String breed;
+    private String breed;
 
     // Constructor
     public Dog() {
