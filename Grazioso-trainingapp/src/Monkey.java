@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 // IT-145 Project 2
 // Michael Ross
 
@@ -13,6 +15,36 @@ public class Monkey extends RescueAnimal {
 	public Monkey() {
 		
 	}
+	
+	public Monkey(String name, String type, String gender, int age, float weight, Boolean reserved, String acquisitionSource, String species, float tailLength, float height, float bodyLength, float torso, float skull, float neck) {
+		super(name, type, gender, age, weight, reserved, acquisitionSource);
+		this.species  = species;
+		this.tailLength = tailLength;
+		this.height	= height;
+		this.bodyLength = bodyLength;
+		this.torso = torso;
+		this.skull = skull;
+		this.neck = neck;
+	}
+	
+    public void updateAnimal() {
+    	super.updateAnimal();
+    	Scanner scnr = new Scanner(System.in);
+    	System.out.println("New monkey species [" + this.species + "]: ");
+    	this.species = scnr.next();
+    	System.out.println("New monkey tail length [" + this.tailLength + "]: ");
+    	this.tailLength = scnr.nextFloat();
+    	System.out.println("New monkey height [" + this.height + "]: ");
+    	this.height = scnr.nextFloat();
+    	System.out.println("New monkey body length [" + this.bodyLength + "]: ");
+    	this.bodyLength = scnr.nextFloat();
+    	System.out.println("New monkey torso size [" + this.torso + "]: ");
+    	this.torso = scnr.nextFloat();
+    	System.out.println("New monkey skull size [" + this.skull + "]: ");
+    	this.skull = scnr.nextFloat();
+    	System.out.println("New monkey neck size [" + this.neck + "]: ");
+    	this.neck = scnr.nextFloat();
+    }
 	
 	// Accessors here:
 	public String getSpecies() {

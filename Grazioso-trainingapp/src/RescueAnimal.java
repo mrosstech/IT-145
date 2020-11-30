@@ -2,6 +2,8 @@
 // Michael Ross
 
 import java.text.SimpleDateFormat;
+import java.util.Scanner;
+import java.time.LocalDateTime;
 
 public class RescueAnimal {
 
@@ -11,14 +13,14 @@ public class RescueAnimal {
     private String gender;
     private int age;
     private float weight;
-    private SimpleDateFormat acquisitionDate;
-    private SimpleDateFormat statusDate;
-    private String acquisitionSource;
-    private Boolean reserved;
+    private LocalDateTime acquisitionDate;   	// Changed the data type on all SimpleDateFormat entries
+    private LocalDateTime statusDate;			// to LocalDateTime because SimpleDateFormat is only a way to format
+    private String acquisitionSource;			// date entries and not a way to store actual dates
+    private Boolean reserved;					// which is what we want here.
 
     private String trainingLocation;
-    private SimpleDateFormat trainingStart;
-    private SimpleDateFormat trainingEnd;
+    private LocalDateTime trainingStart;
+    private LocalDateTime trainingEnd;
     private String trainingStatus;
 
     private String inServiceCountry;
@@ -32,7 +34,43 @@ public class RescueAnimal {
     // Constructor
     public RescueAnimal() {
     }
+    
+    public RescueAnimal(String name, String type, String gender, int age, float weight, Boolean reserved, String acquisitionSource) {
+    	this.name = name;
+    	this.type = type;
+    	this.gender = gender;
+    	this.age = age;
+    	this.weight = weight;
+    	this.reserved = reserved;
+    	this.acquisitionSource = acquisitionSource;
+    }
+    
 
+
+    public void updateAnimal() {
+    	Scanner scnr = new Scanner(System.in);
+    	System.out.println("New animal name [" + this.name + "]: ");
+    	this.name = scnr.next();
+    	System.out.println("New animal type [" + this.type + "]: ");
+    	this.type = scnr.next();
+    	System.out.println("New animal gender [" + this.gender + "]: ");
+    	this.gender = scnr.next();
+    	System.out.println("New animal age [" + this.age + "]: ");
+    	this.age = scnr.nextInt();
+    	System.out.println("New animal weight [" + this.weight + "]: ");
+    	this.weight = scnr.nextFloat();
+    }
+    
+    
+    public void displayAnimalHeader() {
+    	System.out.println("\tName\t\tType\t\tGender\tAge\tWeight");
+    }
+    public void displayAnimal() {
+    	System.out.println(name + "\t\t" + type + "\t\t" + gender + "\t" + age + "\t" + weight);
+    }
+    
+
+    
     // Add Accessor Methods here
     public String getName() {
     	return name;
@@ -49,10 +87,10 @@ public class RescueAnimal {
     public float getWeight() {
     	return weight;
     }
-    public SimpleDateFormat getAcquisitionDate() {
+    public LocalDateTime getAcquisitionDate() {
     	return acquisitionDate;
     }
-    public SimpleDateFormat getStatusDate() {
+    public LocalDateTime getStatusDate() {
     	return statusDate;
     }
     public String getAcquisitionSource() {
@@ -64,10 +102,10 @@ public class RescueAnimal {
     public String getTrainingLocation() {
     	return trainingLocation;
     }
-    public SimpleDateFormat getTrainingStart() {
+    public LocalDateTime getTrainingStart() {
     	return trainingStart;
     }
-    public SimpleDateFormat getTrainingEnd() {
+    public LocalDateTime getTrainingEnd() {
     	return trainingEnd;
     }
     public String getTrainingStatus() {
@@ -111,10 +149,10 @@ public class RescueAnimal {
     public void setWeight(float weight) {
     	this.weight = weight;
     }
-    public void setAcquisitionDate(SimpleDateFormat acquisitionDate) {
+    public void setAcquisitionDate(LocalDateTime acquisitionDate) {
     	this.acquisitionDate = acquisitionDate;
     }
-    public void setStatusDate(SimpleDateFormat statusDate) {
+    public void setStatusDate(LocalDateTime statusDate) {
     	this.statusDate = statusDate;
     }
     public void setAcquisitionSource(String acquisitionSource) {
@@ -126,10 +164,10 @@ public class RescueAnimal {
     public void setTrainingLocation(String trainingLocation) {
     	this.trainingLocation = trainingLocation;
     }
-    public void setTrainingStart(SimpleDateFormat trainingStart) {
+    public void setTrainingStart(LocalDateTime trainingStart) {
     	this.trainingStart = trainingStart;
     }
-    public void setTrainingEnd(SimpleDateFormat trainingEnd) {
+    public void setTrainingEnd(LocalDateTime trainingEnd) {
     	this.trainingEnd = trainingEnd;
     }
     public void setTrainingStatus(String trainingStatus) {
@@ -156,6 +194,7 @@ public class RescueAnimal {
     public void setInServicePostalAddress(String inServicePostalAddress) {
     	this.inServicePostalAddress = inServicePostalAddress;
     }
+    
     
 
 }
