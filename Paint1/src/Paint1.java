@@ -26,7 +26,7 @@ public class Paint1 {
         	} 
         	catch (Exception excpt) {
         		System.out.println("Invalid Height!");
-        		clearScanner = scnr.nextLine();
+        		clearScanner = scnr.nextLine();   // Clear any remaining input.
         	}
         }  while (wallHeight <= 0);
         
@@ -44,8 +44,8 @@ public class Paint1 {
         	     
         	}
         	catch (Exception excpt) {
-        		System.out.println("Invalid Width");
-        		clearScanner = scnr.nextLine();
+        		System.out.println("Invalid Width!");
+        		clearScanner = scnr.nextLine();   // Clear any remaining input.
         	}
         } while (wallWidth <= 0);
        
