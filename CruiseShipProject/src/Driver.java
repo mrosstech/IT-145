@@ -33,40 +33,40 @@ public class Driver {
         	// Select the right action based on the users input
         	switch(userInput) {
         		case "1":
-        			// TODO: Call add ship
+        			addShip(scnr);
         			break;
         		case "2":
-        			// TODO: Call edit ship
+        			editShip();
         			break;
         		case "3":
-        			// TODO: Call add cruise
+        			addCruise(scnr);
         			break;
         		case "4":
-        			// TODO: Call edit cruise
+        			editCruise();
         			break;
         		case "5":
-        			// TODO: Call add passenger
+        			addPassenger();
         			break;
         		case "6":
-        			// TODO: Call edit passenger
+        			editPassenger();
         			break;
         		case "A":
-        			// TODO: Print ship names
+        			printShipList("name");
         			break;
         		case "B":
-        			// TODO: Print Ship In-Service List
+        			printShipList("active");
         			break;
         		case "C":
-        			// TODO: Print ship full list
+        			printShipList("full");
         			break;
         		case "D":
-        			// TODO: Print cruise list
+        			printCruiseList("list");
         			break;
         		case "E":
-        			// TODO: Print Cruise Details
+        			printCruiseList("details");
         			break;
         		case "F":
-        			// TODO: Print passenger list
+        			printPassengerList();
         			break;		
         	}
         	
@@ -210,38 +210,37 @@ public class Driver {
 
     // Add a New Ship
     public static void addShip(Scanner scnr) {
-    	String tempShipName = "";
-    	int tempBalRooms = 0;
-    	int tempOVRooms = 0;
-    	int tempSuites = 0;
+
     	String tempYN = "";
     	Boolean tempService = false;
+    	Ship newShip = new Ship();
     	
     	// Enter ship name.   Check ship name against all known ships.  If 
     	// ship name is already in database then prompt the user to enter
     	// the ship name again.
         do {
             System.out.println("Enter ship name: ");
-            tempShipName = scnr.nextLine();
+            newShip.setShipName(scnr.nextLine());
             for (int x = 0; x < shipList.size(); x++) {
-            	if (shipList.get(x).getShipName().equals(tempShipName)) {
+            	if (shipList.get(x).getShipName().equals(newShip.getShipName())) {
             		System.out.println("Ship name already in database.   Select another ship name!");
-            		tempShipName = "";
+            		newShip.setShipName("");
             	}	
             }
-        } while (tempShipName == "");
+        } while (newShip.getShipName() == "");
         
-//        System.out.println("Enter number of Balcony Rooms: ");
-//        tempBalRooms = scnr.nextInt();
-        tempBalRooms = inputInteger("Enter number of Balcony Rooms:", scnr);
-        System.out.println("Enter number of Ocean View Rooms: ");
-        tempOVRooms = scnr.nextInt();
-        System.out.println("Enter number of Suites: ");
-        tempSuites = scnr.nextInt();
-        System.out.println("Ship in service? (Y/N): ");
-        tempYN = scnr.nextLine();
-
-        // TODO: Add new ship to ship array
+        newShip.setRoomBalcony(inputInteger("Enter number of Balcony Rooms:", scnr));
+        newShip.setRoomOceanView(inputInteger("Enter number of Ocean View Rooms: ", scnr));
+        newShip.setRoomSuite(inputInteger("Enter number of Suites: ", scnr));
+        tempYN = inputYN("Ship in service? (Y/N): ", scnr);
+        if (tempYN.equals("Y")) {
+        	newShip.setInService(true);
+        } else if (tempYN.equals("N")) {
+        	newShip.setInService(false);
+        }
+        
+        // Add ship to ship list after everything is verified
+        shipList.add(newShip);
         
     }
 
@@ -254,11 +253,57 @@ public class Driver {
     }
 
     // Add a New Cruise
-    public static void addCruise() {
-
-        // complete this method
-
+    public static void addCruise(Scanner scnr) {
+    	Cruise newCruise = new Cruise();
+    	Boolean validShip = false;
+    	
+    	// Enter cruise name.  Check cruise name against all known cruises.  If
+    	// cruise is already in the database then prompt the user to enter the 
+    	// cruise name again.
+    	do {
+    		System.out.println("Enter cruise name: ");
+    		newCruise.setCruiseName(scnr.nextLine());
+    		for (int x = 0; x < cruiseList.size(); x++) {
+    			if (cruiseList.get(x).getCruiseName().equals(newCruise.getCruiseName())) {
+    				System.out.println("Cruise name already in database.  Select another cruise name!");
+    				newCruise.setCruiseName("");
+    			}
+    		}
+    	} while (newCruise.getCruiseName() == "");
         
+    	do {
+    		System.out.println("Enter cruise ship name (Enter [L] for list): ");
+    		newCruise.setCruiseShipName(scnr.nextLine());
+    		
+    		// Print list of ships if user inputs 'L'
+    		if (newCruise.getCruiseShipName().equals("L")) {
+    			printShipList("full");
+    			newCruise.setCruiseShipName("");
+    		}
+    		
+    		// Validate that the ship name entered is a valid ship
+    		for (int x = 0; x < shipList.size(); x++) {
+    			if (newCruise.getCruiseShipName().equals(shipList.get(x).getShipName())) {
+    				// If ship name matches, then set validShip to true
+    				validShip = true;
+    				// Break out of the loop because we found a match.
+    				break;
+    			}
+    		}
+    		if (!validShip) {
+    			newCruise.setCruiseShipName("");
+    		}
+    	} while (newCruise.getCruiseShipName() == "");
+
+        System.out.println("Enter departure port: ");
+        newCruise.setDeparturePort(scnr.nextLine());
+        System.out.println("Enter destination port: ");
+        newCruise.setDestination(scnr.nextLine());
+        System.out.println("Enter return port:");
+        newCruise.setReturnPort(scnr.nextLine());
+        
+        // All data has been verified so add the new cruise to the cruise list.
+        cruiseList.add(newCruise);
     }
 
     // Edit an existing cruise
@@ -331,6 +376,7 @@ public class Driver {
     }
     
     public static int inputInteger(String prompt, Scanner scnr) {
+    	// Takes a prompt from the user and ensures a valid integer is returned.
     	int returnInt = 0;
     	Boolean caught = true;
     	
@@ -344,9 +390,31 @@ public class Driver {
     			caught = true;
     			System.out.println("Enter a valid integer!");
     		}
-    	} while (caught == true);
-    	System.out.println(prompt);   	
+    	} while (caught == true);   	
+ 
     	return returnInt;
+    }
+    public static String inputYN(String prompt, Scanner scnr) {
+    	// Takes a prompt and ensures a valid Y or N is returned for yes or no questions.
+    	String returnString = "";
+    	Boolean caught = true;
+    	System.out.println(prompt);
+    	do {
+    		try {
+    			caught = false;
+    			returnString = scnr.nextLine();
+    			if ((!returnString.equals("Y")) && (!returnString.equals("N"))) {
+    				throw new InputMismatchException();
+    			}
+    		} catch (InputMismatchException e) {
+    			scnr.next();
+    			caught = true;
+    			System.out.println("Enter a valid Y or N!");
+    		}
+    	} while (caught == true);
+    	
+    	return returnString;
+    	
     }
 
 }
