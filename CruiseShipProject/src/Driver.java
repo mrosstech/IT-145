@@ -212,7 +212,6 @@ public class Driver {
     public static void addShip(Scanner scnr) {
 
     	String tempYN = "";
-    	Boolean tempService = false;
     	Ship newShip = new Ship();
     	
     	// Enter ship name.   Check ship name against all known ships.  If 
