@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 
@@ -8,7 +9,8 @@ public class Driver {
     private static ArrayList<Ship> shipList = new ArrayList();
     private static ArrayList<Cruise> cruiseList = new ArrayList();
     private static ArrayList<Passenger> passengerList = new ArrayList();
-    private Scanner scnr = new Scanner(System.in);
+    private static Scanner scnr = new Scanner(System.in);
+    private static String userInput = "";
 
     public static void main(String[] args) {
 
@@ -24,6 +26,55 @@ public class Driver {
         // add loop and code here that accepts and validates user input
         // and takes the appropriate action. include appropriate
         // user feedback and redisplay the menu as needed
+        do {
+        	displayMenu();
+        	userInput = scnr.nextLine();
+        	
+        	// Select the right action based on the users input
+        	switch(userInput) {
+        		case "1":
+        			// TODO: Call add ship
+        			break;
+        		case "2":
+        			// TODO: Call edit ship
+        			break;
+        		case "3":
+        			// TODO: Call add cruise
+        			break;
+        		case "4":
+        			// TODO: Call edit cruise
+        			break;
+        		case "5":
+        			// TODO: Call add passenger
+        			break;
+        		case "6":
+        			// TODO: Call edit passenger
+        			break;
+        		case "A":
+        			// TODO: Print ship names
+        			break;
+        		case "B":
+        			// TODO: Print Ship In-Service List
+        			break;
+        		case "C":
+        			// TODO: Print ship full list
+        			break;
+        		case "D":
+        			// TODO: Print cruise list
+        			break;
+        		case "E":
+        			// TODO: Print Cruise Details
+        			break;
+        		case "F":
+        			// TODO: Print passenger list
+        			break;		
+        	}
+        	
+        	// Clear the screen
+        	System.out.println("\f");
+        	
+        } while (!userInput.equals("x"));
+        
         
 
     }
@@ -166,18 +217,30 @@ public class Driver {
     	String tempYN = "";
     	Boolean tempService = false;
     	
-        System.out.println("Enter ship name: ");
-        tempShipName = scnr.nextLine();
-        System.out.println("Enter number of Balcony Rooms: ");
-        tempBalRooms = scnr.nextInt();
+    	// Enter ship name.   Check ship name against all known ships.  If 
+    	// ship name is already in database then prompt the user to enter
+    	// the ship name again.
+        do {
+            System.out.println("Enter ship name: ");
+            tempShipName = scnr.nextLine();
+            for (int x = 0; x < shipList.size(); x++) {
+            	if (shipList.get(x).getShipName().equals(tempShipName)) {
+            		System.out.println("Ship name already in database.   Select another ship name!");
+            		tempShipName = "";
+            	}	
+            }
+        } while (tempShipName == "");
+        
+//        System.out.println("Enter number of Balcony Rooms: ");
+//        tempBalRooms = scnr.nextInt();
+        tempBalRooms = inputInteger("Enter number of Balcony Rooms:", scnr);
         System.out.println("Enter number of Ocean View Rooms: ");
         tempOVRooms = scnr.nextInt();
         System.out.println("Enter number of Suites: ");
         tempSuites = scnr.nextInt();
         System.out.println("Ship in service? (Y/N): ");
         tempYN = scnr.nextLine();
-        
-        // TODO: Validate ship does not exist in ship array
+
         // TODO: Add new ship to ship array
         
     }
@@ -265,6 +328,25 @@ public class Driver {
                 return false;
         }
         return true;
+    }
+    
+    public static int inputInteger(String prompt, Scanner scnr) {
+    	int returnInt = 0;
+    	Boolean caught = true;
+    	
+    	System.out.println(prompt);
+    	do {
+    		try {
+    			caught = false;
+    			returnInt = scnr.nextInt();
+    		} catch (InputMismatchException e) {
+    			scnr.next();
+    			caught = true;
+    			System.out.println("Enter a valid integer!");
+    		}
+    	} while (caught == true);
+    	System.out.println(prompt);   	
+    	return returnInt;
     }
 
 }
