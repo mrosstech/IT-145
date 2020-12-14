@@ -73,7 +73,7 @@ public class Driver {
         	// Clear the screen
         	System.out.println("\f");
         	
-        } while (!userInput.equals("x"));
+        } while (!userInput.equalsIgnoreCase("x"));
         
         
 
@@ -231,6 +231,7 @@ public class Driver {
         newShip.setRoomBalcony(inputInteger("Enter number of Balcony Rooms:", scnr));
         newShip.setRoomOceanView(inputInteger("Enter number of Ocean View Rooms: ", scnr));
         newShip.setRoomSuite(inputInteger("Enter number of Suites: ", scnr));
+        newShip.setRoomInterior(inputInteger("Enter number of Interior Rooms: ", scnr));
         tempYN = inputYN("Ship in service? (Y/N): ", scnr);
         if (tempYN.equalsIgnoreCase("Y")) {
         	newShip.setInService(true);
@@ -315,7 +316,11 @@ public class Driver {
 
     // Add a New Passenger
     public static void addPassenger(Scanner newPassengerInput) {
-        // Scanner newPassengerInput = new Scanner(System.in);
+    	// Modified this method as it would have only worked with one cruise.   The new 
+    	// detection logic works for an arbitrary amount of cruises to ensure it works
+    	// properly.   Also added a handy way for the user to list all cruises when
+    	// selecting the cruise.  This helps to make it more user friendly.
+        
         System.out.println("Enter the new passenger's name: ");
         String newPassengerName = newPassengerInput.nextLine();
         Boolean validCruise = false;
@@ -330,19 +335,22 @@ public class Driver {
 
         // get cruise name for passenger
         do {
-        	System.out.println("Enter cruise name: ");
+        	System.out.println("Enter cruise name ([L] for list): ");
         	newCruiseName = newPassengerInput.nextLine();
-
-	        // ensure cruise exists
-	        for (Cruise eachCruise: cruiseList) {
-	        	System.out.println("Comparing: " + eachCruise.getCruiseName() + " with " + newCruiseName);
-	            if (eachCruise.getCruiseName().equalsIgnoreCase(newCruiseName)) {
-	            	validCruise = true;
-	            }
-	        }
-	        if (!validCruise) {
-	        	System.out.println("This is not a valid cruise! Enter a valid cruise.");
-	        }
+        	if (newCruiseName.equalsIgnoreCase("L")) {
+        		printCruiseList("list");
+        	} else {
+		        // ensure cruise exists
+		        for (Cruise eachCruise: cruiseList) {
+		        	// DEBUG: System.out.println("Comparing: " + eachCruise.getCruiseName() + " with " + newCruiseName);
+		            if (eachCruise.getCruiseName().equalsIgnoreCase(newCruiseName)) {
+		            	validCruise = true;
+		            }
+		        }
+		        if (!validCruise) {
+		        	System.out.println("This is not a valid cruise! Enter a valid cruise.");
+		        }
+        	}
         } while (!validCruise);
 
         // get room type
