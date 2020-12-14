@@ -20,8 +20,8 @@ public class Driver {
 
         
         // TODO: Remove.  Only for testing.
-        printCruiseList("details");
-        printShipList("active");
+        //printCruiseList("details");
+        //printShipList("active");
         
         // add loop and code here that accepts and validates user input
         // and takes the appropriate action. include appropriate
@@ -31,7 +31,7 @@ public class Driver {
         	userInput = scnr.nextLine();
         	
         	// Select the right action based on the users input
-        	switch(userInput) {
+        	switch(userInput.toUpperCase()) {
         		case "1":
         			addShip(scnr);
         			break;
@@ -45,7 +45,7 @@ public class Driver {
         			editCruise();
         			break;
         		case "5":
-        			addPassenger();
+        			addPassenger(scnr);
         			break;
         		case "6":
         			editPassenger();
@@ -221,7 +221,7 @@ public class Driver {
             System.out.println("Enter ship name: ");
             newShip.setShipName(scnr.nextLine());
             for (int x = 0; x < shipList.size(); x++) {
-            	if (shipList.get(x).getShipName().equals(newShip.getShipName())) {
+            	if (shipList.get(x).getShipName().equalsIgnoreCase(newShip.getShipName())) {
             		System.out.println("Ship name already in database.   Select another ship name!");
             		newShip.setShipName("");
             	}	
@@ -232,9 +232,9 @@ public class Driver {
         newShip.setRoomOceanView(inputInteger("Enter number of Ocean View Rooms: ", scnr));
         newShip.setRoomSuite(inputInteger("Enter number of Suites: ", scnr));
         tempYN = inputYN("Ship in service? (Y/N): ", scnr);
-        if (tempYN.equals("Y")) {
+        if (tempYN.equalsIgnoreCase("Y")) {
         	newShip.setInService(true);
-        } else if (tempYN.equals("N")) {
+        } else if (tempYN.equalsIgnoreCase("N")) {
         	newShip.setInService(false);
         }
         
@@ -263,7 +263,7 @@ public class Driver {
     		System.out.println("Enter cruise name: ");
     		newCruise.setCruiseName(scnr.nextLine());
     		for (int x = 0; x < cruiseList.size(); x++) {
-    			if (cruiseList.get(x).getCruiseName().equals(newCruise.getCruiseName())) {
+    			if (cruiseList.get(x).getCruiseName().equalsIgnoreCase(newCruise.getCruiseName())) {
     				System.out.println("Cruise name already in database.  Select another cruise name!");
     				newCruise.setCruiseName("");
     			}
@@ -275,14 +275,14 @@ public class Driver {
     		newCruise.setCruiseShipName(scnr.nextLine());
     		
     		// Print list of ships if user inputs 'L'
-    		if (newCruise.getCruiseShipName().equals("L")) {
+    		if (newCruise.getCruiseShipName().equalsIgnoreCase("L")) {
     			printShipList("full");
     			newCruise.setCruiseShipName("");
     		}
     		
     		// Validate that the ship name entered is a valid ship
     		for (int x = 0; x < shipList.size(); x++) {
-    			if (newCruise.getCruiseShipName().equals(shipList.get(x).getShipName())) {
+    			if (newCruise.getCruiseShipName().equalsIgnoreCase(shipList.get(x).getShipName())) {
     				// If ship name matches, then set validShip to true
     				validShip = true;
     				// Break out of the loop because we found a match.
@@ -314,12 +314,12 @@ public class Driver {
     }
 
     // Add a New Passenger
-    public static void addPassenger() {
-
-        Scanner newPassengerInput = new Scanner(System.in);
+    public static void addPassenger(Scanner newPassengerInput) {
+        // Scanner newPassengerInput = new Scanner(System.in);
         System.out.println("Enter the new passenger's name: ");
         String newPassengerName = newPassengerInput.nextLine();
-
+        Boolean validCruise = false;
+        String newCruiseName = "";
         // ensure new passenger name does not already exist
         for (Passenger eachPassenger: passengerList) {
             if (eachPassenger.getPassengerName().equalsIgnoreCase(newPassengerName)) {
@@ -329,18 +329,21 @@ public class Driver {
         }
 
         // get cruise name for passenger
-        System.out.println("Enter cruise name: ");
-        String newCruiseName = newPassengerInput.nextLine();
+        do {
+        	System.out.println("Enter cruise name: ");
+        	newCruiseName = newPassengerInput.nextLine();
 
-        // ensure cruise exists
-        for (Cruise eachCruise: cruiseList) {
-            if (eachCruise.getCruiseName().equalsIgnoreCase(newCruiseName)) {
-                // cruise does exist
-            } else {
-                System.out.println("That cruise does not exist in the system. Exiting to menu...");
-                return; // quits addPassenger() method processing
-            }
-        }
+	        // ensure cruise exists
+	        for (Cruise eachCruise: cruiseList) {
+	        	System.out.println("Comparing: " + eachCruise.getCruiseName() + " with " + newCruiseName);
+	            if (eachCruise.getCruiseName().equalsIgnoreCase(newCruiseName)) {
+	            	validCruise = true;
+	            }
+	        }
+	        if (!validCruise) {
+	        	System.out.println("This is not a valid cruise! Enter a valid cruise.");
+	        }
+        } while (!validCruise);
 
         // get room type
         System.out.println("Enter Room Type (BAL, OV, STE, or INT: ");
@@ -401,7 +404,7 @@ public class Driver {
     	do {
     		try {
     			caught = false;
-    			returnString = scnr.nextLine();
+    			returnString = scnr.next();
     			if ((!returnString.equals("Y")) && (!returnString.equals("N"))) {
     				throw new InputMismatchException();
     			}
